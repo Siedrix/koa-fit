@@ -52,11 +52,6 @@ publicRouter.post('/log-in', co.wrap(function *(ctx, next) {
 	ctx.redirect('/app')
 }))
 
-publicRouter.get('/log-out', co.wrap(function *(ctx, next) {
-	ctx.session.userUuid = null
-	ctx.redirect('/')
-}))
-
 publicRouter.get('/sign-up', co.wrap(function *(ctx, next) {
 	const error = ctx.flash.error
 	yield ctx.render('public/signup', {error})

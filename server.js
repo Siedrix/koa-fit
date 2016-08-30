@@ -115,6 +115,11 @@ app.use(co.wrap(function *(ctx, next) {
 // Loads app routers
 const mainRouter = Router()
 
+mainRouter.get('/log-out', co.wrap(function *(ctx, next) {
+	ctx.session.userUuid = null
+	ctx.redirect('/')
+}))
+
 const appRouter = require('./routers/app')
 mainRouter.use('', appRouter.routes(), appRouter.allowedMethods())
 
