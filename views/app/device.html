@@ -1,0 +1,50 @@
+{% extends "app-layout.html" %}
+
+{% block title %}Koa base about{% endblock %}
+
+{% block content %}
+<div id="profile" class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+			<div class="jumbotron">
+				<h2>Device: {{ device.name }}</h2>
+				<br>
+				<h4>Tokens:</h4>
+				<p><b>Api Key:</b> {{ device.apiKey }}</p>
+				<p><b>Api Token:</b> {{ device.apiToken }}</p>
+				<p>
+					<b>Sample request:</b>
+					<pre>curl -X POST 'http://127.0.0.1:3000/api/v1/metrics' -H 'Authorization: DeviceKey {{ device.apiKey }}:{{ device.apiToken }}' -H 'Content-Type: application/json' --data-binary '{}'</pre>
+				</p>
+			</div>	
+			<div class="jumbotron">
+				<h2>Data</h2>
+				<p><span id="date">{{ metric.date }}</span></p>
+				<pre id="data">{{ metric.data | dump }}</pre>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block css %}
+<link href="/assets/css/profile.css" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+var socket = io.connect()
+
+socket.on('connect', function () {
+	socket.emit('join', {'channel':'{{ device.apiKey }}:{{ device.apiToken }}'});
+});
+
+socket.on('metric', function(metric){
+	console.log('New metric =>', metric)
+
+	$('#date').text( metric.date )
+	$('#data').text( JSON.stringify(metric.data) )
+})
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "app-layout.html" %}
+
+{% block title %}Koa base about{% endblock %}
+
+{% block content %}
+
+	{% for device in devices %}
+	<div><a href="/app/device/{{ device.uuid }}">{{ device.name }}</a></div>
+	{% endfor %}
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "app-layout.html" %}
+
+{% block title %}Koa base about{% endblock %}
+
+{% block content %}
+<div id="profile" class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+			<div class="jumbotron">
+				<h2>User: {{ user.name }}</h2>
+				<br>
+				<h4>User tokens:</h4>
+				<p><b>Api Key:</b> {{ user.apiKey }}</p>
+				<p><b>Api Token:</b> {{ user.apiToken }}</p>
+				<p>
+					<b>Sample request:</b>
+					<pre>curl -X POST 'http://127.0.0.1:3000/api/v1/status' -H 'Authorization: ApiKey {{ user.apiKey }}:{{ user.apiToken }}' -H 'Content-Type: application/json' --data-binary '{}'</pre>
+				</p>
+			</div>	
+			<div class="jumbotron">
+				<h2>Devices</h2>
+
+				{% for device in devices %}
+				<div>
+					<h3>{{ device.name | capitalize }}</h3>
+					<p><b>Api Key:</b> {{ device.apiKey }}</p>
+					<p><b>Api Token:</b> {{ device.apiToken }}</p>
+				</div>
+				{% endfor %}
+
+				<form method="POST" action="/app/device/">
+					<h4>Add device:</h4>
+					<p>
+						<div class="input-group">
+							<input type="text" class="form-control" name="device" placeholder="Device name">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">Create!</button>
+							</span>
+						</div>						
+					</p>
+				</form>
+			</div>	
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block css %}
+<link href="/assets/css/profile.css" rel="stylesheet">
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript"></script>
+{% endblock %}

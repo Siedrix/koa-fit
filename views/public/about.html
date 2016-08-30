@@ -1,0 +1,17 @@
+{% extends "public-layout.html" %}
+
+{% block title %}Koa base about{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Super Informative About Page</h2>
+    <p class="text-center">This is an about page. Have a look around.</p>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	var el = document.getElementById('about-page');
+	el.className = 'active';
+</script>
+{% endblock %}

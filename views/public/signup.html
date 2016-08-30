@@ -1,0 +1,28 @@
+{% extends "public-layout.html" %}
+
+{% block title %}Koa base signup{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+			<h2 class="text-center">Welcome, create a user.</h2>
+			<form class="form-signin" method="post" action="/sign-up">
+				{% if error %}
+				<div class="alert alert-warning" role="alert">
+					<i class="fa fa-exclamation-triangle"></i>
+					<b>Error:</b>
+					{{ error }}
+				</div>
+				{% endif %}
+				<label for="inputEmail" class="sr-only">Name</label>
+				<input type="text" id="inputUser" class="form-control" placeholder="Name" required="" autofocus="" name="name">
+				<input type="text" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="" name="email">
+				<label for="inputPassword" class="sr-only">Password</label>
+				<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name="password">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

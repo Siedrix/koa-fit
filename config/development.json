@@ -1,0 +1,10 @@
+{
+	"db":{
+		"name":"koa-base",
+		"host": "localhost",
+		"port": 27017
+	},
+	"redis": {
+		"host": "localhost"
+	}	
+}

@@ -1,0 +1,27 @@
+{% extends "public-layout.html" %}
+
+{% block title %}Koa base login{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+			<h2 class="text-center">Welcome, please log.</h2>
+			<form class="form-signin" method="post" action="/log-in">
+				{% if error %}
+				<div class="alert alert-warning" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only">Error:</span>
+					{{ error }}
+				</div>
+				{% endif %}
+				<label for="inputEmail" class="sr-only">Email address</label>
+				<input type="text" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" name="email">
+				<label for="inputPassword" class="sr-only">Password</label>
+				<input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" name="password">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
