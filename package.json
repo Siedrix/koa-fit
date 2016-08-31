@@ -24,6 +24,7 @@
     "koa-router": "^7.0.1",
     "koa-static": "^3.0.0",
     "minimist": "^1.2.0",
+    "moment": "^2.14.1",
     "mongoose": "^4.5.10",
     "node-uuid": "^1.4.7",
     "nunjucks": "^2.4.2",

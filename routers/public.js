@@ -41,7 +41,7 @@ publicRouter.post('/log-in', co.wrap(function *(ctx, next) {
 		return ctx.redirect('/log-in')
 	}
 
-	const compare
+	var compare
 	try{
 		compare = yield bcryptUtils.compare(password, user.password)
 	}catch(err){
