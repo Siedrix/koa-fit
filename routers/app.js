@@ -27,9 +27,7 @@ appRouter.use(co.wrap(function *(ctx, next) {
 }))
 
 appRouter.get('/', co.wrap(function *(ctx, next) {
-	const devices = yield Device.find({user:ctx.state.user})
-
-	yield ctx.render('app/main',{devices})
+	yield ctx.render('app/main',{})
 }))
 
 appRouter.get('/device/:uuid', co.wrap(function *(ctx, next) {

@@ -14,7 +14,7 @@ publicRouter.use(co.wrap(function *(ctx, next){
 		yield next()
 	}else{
 		return ctx.redirect('/app')
-	}	
+	}
 }))
 
 publicRouter.get('/', co.wrap(function *(ctx, next) {
@@ -76,6 +76,34 @@ publicRouter.post('/sign-up', co.wrap(function *(ctx, next) {
 	const newUser = yield User.create(body)
 	ctx.session.userUuid = newUser.uuid
 	ctx.redirect('/app')
+}))
+
+publicRouter.get('/hello-world', co.wrap(function *(ctx, next) {
+	yield ctx.render('public/webpack',{
+		title:'Hello world',
+		src:'/build/hello-world.js'
+	})
+}))
+
+publicRouter.get('/timer', co.wrap(function *(ctx, next) {
+	yield ctx.render('public/webpack',{
+		title:'Timer',
+		src:'/build/timer.js'
+	})
+}))
+
+publicRouter.get('/subreddit', co.wrap(function *(ctx, next) {
+	yield ctx.render('public/subreddit',{
+		title:'Subreddits',
+		src:'/build/subreddit.js'
+	})
+}))
+
+publicRouter.get('/events', co.wrap(function *(ctx, next) {
+	yield ctx.render('public/webpack',{
+		title:'Events',
+		src:'/build/events.js'
+	})
 }))
 
 module.exports = publicRouter

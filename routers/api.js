@@ -5,6 +5,7 @@ const bcryptUtils = require('../lib/bcrypt')
 const User = require('../models/user')
 const Device = require('../models/device')
 const Metric = require('../models/metric')
+const Message = require('../models/message')
 
 const apiRouter = Router({
 	prefix: '/api/v1'
@@ -24,7 +25,13 @@ apiRouter.use(co.wrap(function *(ctx, next) {
 		}
 	}
 
-	if(device && user){
+	if(ctx.session.userUuid){
+		user = yield User.findOne({uuid: ctx.session.userUuid})
+
+		ctx.state.user = user
+	}
+
+	if(user){
 		ctx.state.device = device
 		ctx.state.user = user
 
@@ -43,6 +50,24 @@ apiRouter.post('/metrics', co.wrap(function *(ctx, next) {
 
 	ctx.app.io.to(device.apiKey+':'+device.apiToken).emit('metric', metric.toJSON() )
 	
+	ctx.body = {success: true}
+}))
+
+apiRouter.get('/messages',co.wrap(function *(ctx, next) {
+	const messages = yield Message.find({}).sort('date').populate('user', 'name')
+		
+	ctx.body = messages
+}))
+
+apiRouter.post('/messages',co.wrap(function *(ctx, next) {
+	const user = ctx.state.user
+	const message = yield Message.create({
+		user,
+		message: ctx.request.body.message
+	})
+
+	ctx.app.io.emit('new-message', message )
+		
 	ctx.body = {success: true}
 }))
 

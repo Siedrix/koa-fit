@@ -36,6 +36,7 @@ app.use( render(nunjucks.configure('./views', {noCache:true}), {ext:'.html'}) )
 
 // Static files
 app.use(mount('/assets', serve(__dirname + '/public', {defer:false})))
+app.use(mount('/build', serve(__dirname + '/frontend/build', {defer:false})))
 
 // Body parser
 app.use(bodyParser())
@@ -123,11 +124,11 @@ mainRouter.get('/log-out', co.wrap(function *(ctx, next) {
 const appRouter = require('./routers/app')
 mainRouter.use('', appRouter.routes(), appRouter.allowedMethods())
 
-const publicRouter = require('./routers/public')
-mainRouter.use('', publicRouter.routes(), publicRouter.allowedMethods())
-
 const apiRouter = require('./routers/api')
 mainRouter.use('', apiRouter.routes(), apiRouter.allowedMethods())
+
+const publicRouter = require('./routers/public')
+mainRouter.use('', publicRouter.routes(), publicRouter.allowedMethods())
 
 app.use(mainRouter.routes())
 	.use(mainRouter.allowedMethods())
